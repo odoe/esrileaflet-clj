@@ -21687,15 +21687,20 @@ cljs.core.special_symbol_QMARK_ = function special_symbol_QMARK_(x) {
   new cljs.core.Symbol(null, "new", "new", -1640422567, null), new cljs.core.Symbol(null, "ns", "ns", -1640528002, null), new cljs.core.Symbol(null, "deftype*", "deftype*", -978581244, null), new cljs.core.Symbol(null, "let*", "let*", -1637213400, null), new cljs.core.Symbol(null, "js*", "js*", -1640426054, null), new cljs.core.Symbol(null, "fn*", "fn*", -1640430053, null), new cljs.core.Symbol(null, "recur", "recur", -1532142362, null), new cljs.core.Symbol(null, "set!", "set!", -1637004872, null), 
   new cljs.core.Symbol(null, ".", ".", -1640531481, null), new cljs.core.Symbol(null, "quote", "quote", -1532577739, null), new cljs.core.Symbol(null, "throw", "throw", -1530191713, null), new cljs.core.Symbol(null, "def", "def", -1640432194, null)]), x)
 };
-goog.provide("site");
+goog.provide("site.utils");
 goog.require("cljs.core");
-site.L = function() {
+site.utils.L = function() {
   var ct = this;
   return ct["L"]
 }();
-site.esri = site.L.esri;
-site.utilTemplate = site.L.Util.template;
-site.ctr = cljs.core.clj__GT_js.call(null, cljs.core.PersistentVector.fromArray([45.528, -122.68], true));
+site.utils.esri = site.utils.L.esri;
+site.utils.utilTemplate = site.utils.L.Util.template;
+site.utils.ctr = cljs.core.clj__GT_js.call(null, cljs.core.PersistentVector.fromArray([45.528, -122.68], true));
+site.utils.zoom = 13;
+goog.provide("site");
+goog.require("cljs.core");
+goog.require("site.utils");
+goog.require("site.utils");
 site.parkStyle = function parkStyle() {
   return cljs.core.clj__GT_js.call(null, cljs.core.PersistentArrayMap.fromArray(["\ufdd0:color", "#70ca49", "\ufdd0:weight", 2], true))
 };
@@ -21703,26 +21708,24 @@ site.opts = cljs.core.clj__GT_js.call(null, cljs.core.PersistentArrayMap.fromArr
 site.parkUrl = "http://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Portland_Parks/FeatureServer/0";
 site.popupTemplate = "<h3>{NAME}</h3>{ACRES} Acres<br><small>Property ID: {PROPERTYID}<small>";
 site.boundTemplate = function boundTemplate(feature) {
-  return site.utilTemplate.call(null, site.popupTemplate, feature.properties)
+  return site.utils.utilTemplate.call(null, site.popupTemplate, feature.properties)
 };
 site.bindPopup = function bindPopup(f) {
   return f.bindPopup(site.boundTemplate)
 };
 site.basemap = function basemap(m) {
-  var b = site.esri.basemapLayer("Gray").addTo(m);
+  var b = site.utils.esri.basemapLayer("Gray").addTo(m);
   return m
 };
-site.fLayer = function fLayer(options) {
-  return function(m) {
-    var f = site.esri.featureLayer(site.parkUrl, options).addTo(m);
-    return f
-  }
+site.fLayer = function fLayer(options, m) {
+  var f = site.utils.esri.featureLayer(site.parkUrl, options).addTo(m);
+  return f
 };
 site.loadMap = function loadMap() {
-  var m = site.L.map("map").setView(site.ctr, 13);
+  var m = site.utils.L.map("map").setView(site.utils.ctr, site.utils.zoom);
   return m
 };
 site.init = function init() {
-  return cljs.core.comp.call(null, site.bindPopup, site.fLayer.call(null, site.opts), site.basemap, site.loadMap).call(null)
+  return cljs.core.comp.call(null, site.bindPopup, cljs.core.partial.call(null, site.fLayer, site.opts), site.basemap, site.loadMap).call(null)
 };
 goog.exportSymbol("site.init", site.init);

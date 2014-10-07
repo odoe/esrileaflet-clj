@@ -1,12 +1,5 @@
-(ns site)
-
-(def L (this-as ct (aget ct "L")))
-
-(def esri (.-esri L))
-
-(def utilTemplate (.-template (.-Util L)))
-
-(def ctr (clj->js [45.528, -122.680]))
+(ns site
+  (:require [site.utils :refer [L esri utilTemplate ctr zoom]]))
 
 (defn parkStyle []
   (clj->js { :color "#70ca49", :weight 2 }))
@@ -27,14 +20,13 @@
   (let [b (-> esri (.basemapLayer "Gray")
                     (.addTo m))] m))
 
-(defn fLayer [options]
-  (fn [m]
-    (let [f (-> esri (.featureLayer parkUrl options)
-                    (.addTo m))], f)))
+(defn fLayer [options m]
+  (let [f (-> esri (.featureLayer parkUrl options)
+                    (.addTo m))], f))
 
 (defn loadMap []
   (let [m (-> L (.map "map")
-              (.setView ctr 13))] m))
+              (.setView ctr zoom))] m))
 
 (defn ^:export init []
-  ((comp bindPopup (fLayer opts) basemap loadMap)))
+  ((comp bindPopup (partial fLayer opts) basemap loadMap)))
