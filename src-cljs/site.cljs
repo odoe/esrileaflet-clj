@@ -1,7 +1,7 @@
 (ns site
   (:require [site.utils :refer [L esri utilTemplate ctr zoom]]))
 
-(defn parkStyle []
+(defn parkStyle [_]
   (clj->js { :color "#70ca49", :weight 2 }))
 
 (def opts (clj->js { :style parkStyle }))
@@ -24,9 +24,9 @@
   (let [f (-> esri (.featureLayer parkUrl options)
                     (.addTo m))], f))
 
-(defn loadMap []
+(defn loadMap [_]
   (let [m (-> L (.map "map")
               (.setView ctr zoom))] m))
 
-(defn ^:export init []
+(defn ^:export init [_]
   ((comp bindPopup (partial fLayer opts) basemap loadMap)))

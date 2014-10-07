@@ -21695,13 +21695,13 @@ site.utils.L = function() {
 }();
 site.utils.esri = site.utils.L.esri;
 site.utils.utilTemplate = site.utils.L.Util.template;
-site.utils.ctr = cljs.core.clj__GT_js.call(null, cljs.core.PersistentVector.fromArray([45.528, -122.68], true));
+site.utils.ctr = [45.528, -122.68];
 site.utils.zoom = 13;
 goog.provide("site");
 goog.require("cljs.core");
 goog.require("site.utils");
 goog.require("site.utils");
-site.parkStyle = function parkStyle() {
+site.parkStyle = function parkStyle(_) {
   return cljs.core.clj__GT_js.call(null, cljs.core.PersistentArrayMap.fromArray(["\ufdd0:color", "#70ca49", "\ufdd0:weight", 2], true))
 };
 site.opts = cljs.core.clj__GT_js.call(null, cljs.core.PersistentArrayMap.fromArray(["\ufdd0:style", site.parkStyle], true));
@@ -21721,11 +21721,11 @@ site.fLayer = function fLayer(options, m) {
   var f = site.utils.esri.featureLayer(site.parkUrl, options).addTo(m);
   return f
 };
-site.loadMap = function loadMap() {
+site.loadMap = function loadMap(_) {
   var m = site.utils.L.map("map").setView(site.utils.ctr, site.utils.zoom);
   return m
 };
-site.init = function init() {
+site.init = function init(_) {
   return cljs.core.comp.call(null, site.bindPopup, cljs.core.partial.call(null, site.fLayer, site.opts), site.basemap, site.loadMap).call(null)
 };
 goog.exportSymbol("site.init", site.init);

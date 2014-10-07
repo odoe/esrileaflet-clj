@@ -6,6 +6,6 @@
 
 (def utilTemplate (.-template (.-Util L)))
 
-(def ctr (clj->js [45.528, -122.680]))
+(def ctr (array 45.528 -122.680))
 
 (def zoom 13)
