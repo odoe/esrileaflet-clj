@@ -11,6 +11,6 @@
     [:body body
      [:div {:id "map"}]
      (include-js "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js")
-     (include-js "http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js")
+     (include-js "http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.3/esri-leaflet.js")
      (include-js "/js/main.js")
      [:script "site.init();"]]))
